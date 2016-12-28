@@ -14,7 +14,7 @@
  * How to :
  *     Use addFuncs to set the callback. Use a clousure to keep the function scope.
  * Example call :
- *     $().mediaStep('addFuncs', function(){
+ *     $().bsEventHook('addFuncs', function(){
  *         hackIPs();
  *         getBankNumber();
  *     });
@@ -23,18 +23,18 @@
 
     var methods = {
         addFuncs : function( f ) {
-            $.fn.mediaStep.settings.stepFuncs.push(f);
+            $.fn.bsEventHook.settings.stepFuncs.push(f);
             start();
         },
         init : function (opts) {
             // Extend our default options with those provided.
             // This is a destructive operation; Any attribute with the same name as a field in defaults will be overridden.
-            $.fn.mediaStep.settings = $.extend( {}, $.fn.mediaStep.settings, opts );
+            $.fn.bsEventHook.settings = $.extend( {}, $.fn.bsEventHook.settings, opts );
             start();
         }
     };
 
-    $.fn.mediaStep = function( methodOrOptions ) {
+    $.fn.bsEventHook = function( methodOrOptions ) {
         if (methods[methodOrOptions]) {
             return methods[methodOrOptions].apply(this, Array.prototype.slice.call(arguments, 1));
         }
@@ -62,7 +62,7 @@
         running = true;
 
         // reference to the settings and steps
-        var settings = $.fn.mediaStep.settings;
+        var settings = $.fn.bsEventHook.settings;
         _steps = settings.bootstrapSteps;
         if (settings.customSteps && settings.customSteps.length && checkWellFormedSteps(settings.customSteps)) {
             _steps = settings.customSteps;
@@ -83,7 +83,7 @@
         if (getStep(lastWidth) != getStep(currentWidth)) {
             lastWidth = currentWidth;
             //call stepFuncs
-            $.each($.fn.mediaStep.settings.stepFuncs, function(i, callback){
+            $.each($.fn.bsEventHook.settings.stepFuncs, function(i, callback){
                 if (typeof callback === "function") {
                     callback();
                 }
@@ -92,7 +92,7 @@
     }
 
     // Plugin defaults & settings – added as a property on our plugin function.
-    $.fn.mediaStep.defaults = {
+    $.fn.bsEventHook.defaults = {
         renderTimeout: 250,
         stepFuncs: [],
         customSteps: [],
@@ -108,7 +108,7 @@
     };
 
     // set the default settings ( deep copy )
-    $.fn.mediaStep.settings = $.extend(true, {}, $.fn.mediaStep.defaults);
+    $.fn.bsEventHook.settings = $.extend(true, {}, $.fn.bsEventHook.defaults);
 
     function viewport() {
         var e = window, a = 'inner';
